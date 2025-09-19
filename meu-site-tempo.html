@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌤️ Previsão do Tempo com Google AdSense</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        input {
+            padding: 14px;
+            width: 80%;
+            max-width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 14px 30px;
+            background: #00b894;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        #result {
+            margin-top: 25px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            min-height: 50px;
+            text-align: center;
+        }
+
+        /* ✅ ESTILO DE FALLBACK PARA ANÚNCIOS (PARA DEBUG) */
+        .adsbygoogle {
+            display: inline-block !important;
+            background: #f9f9f9 !important;
+            border: 2px dashed #ccc !important;
+            margin: 15px auto !important;
+            text-align: center;
+            line-height: 90px;
+            color: #666;
+            font-size: 14px;
+        }
+        .adsbygoogle[data-ad-slot="1919368439"] {
+            background: #e3f2fd !important;
+            border-color: #2196f3 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🔍 Debug: Se você vê caixas tracejadas abaixo, o espaço do anúncio está funcionando.</h2>
+
+    <!-- 📍 BANNER SUPERIOR -->
+    <div>
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:90px"
+             data-ad-client="ca-pub-7993033578233937"
+             data-ad-slot="1919368439"
+             data-adtest="on"></ins>
+        <script>
+            console.log("✅ Script do anúncio topo carregado");
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="container">
+        <h1>🌤️ Previsão do Tempo</h1>
+        <input type="text" id="city" placeholder="Ex: São Paulo">
+        <button onclick="buscarTempo()">Ver Previsão</button>
+        <div id="result">Digite uma cidade...</div>
+    </div>
+
+    <!-- 📍 BANNER LATERAL -->
+    <div style="text-align: center; margin: 30px;">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-7993033578233937"
+             data-ad-slot="1919368439"
+             data-adtest="on"></ins>
+        <script>
+            console.log("✅ Script do anúncio lateral carregado");
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <!-- 📍 BANNER RODAPÉ -->
+    <div>
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:90px"
+             data-ad-client="ca-pub-7993033578233937"
+             data-ad-slot="1919368439"
+             data-adtest="on"></ins>
+        <script>
+            console.log("✅ Script do anúncio rodapé carregado");
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <!-- 🎯 SCRIPT GLOBAL DO ADSENSE -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7993033578233937" crossorigin="anonymous"></script>
+
+    <script>
+        const API_KEY = "7bfd4e3a48e519c206d703898839f24e";
+        function buscarTempo() {
+            const cidade = document.getElementById("city").value.trim();
+            const resultDiv = document.getElementById("result");
+            if (!cidade) { resultDiv.innerHTML = "❌ Digite uma cidade."; return; }
+            resultDiv.innerHTML = "⏳ Buscando...";
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${API_KEY}&units=metric&lang=pt_br`)
+                .then(r => r.json())
+                .then(data => {
+                    resultDiv.innerHTML = `✅ ${data.name}: ${Math.round(data.main.temp)}°C - ${data.weather[0].description}`;
+                })
+                .catch(err => {
+                    resultDiv.innerHTML = "❌ Erro: " + err.message;
+                });
+        }
+    </script>
+
+</body>
+</html>
